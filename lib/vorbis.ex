@@ -1,13 +1,13 @@
 defmodule Vorbis do
-  
+
   def read_block(packet) do
     { packet, %{} }
     |> read_vendor
     |> read_comments
   end
-  
+
   def read_vendor({packet, vorbis}) do
-    case packet do
+    cond packet do
       <<
         vendor_length::size(32)-little,
         vendor_string::size(vendor_length)-unit(8),
@@ -23,25 +23,25 @@ defmodule Vorbis do
         }
     end
   end
-  
+
   def read_comments({packet, vorbis}) do
-    case packet do
+    cond packet do
       <<comments_length::size(32)-little, comments::binary>> ->
         read_comments({<<comments::binary>>, vorbis}, comments_length)
     end
   end
-  
+
   def read_comments({comments, vorbis}, 1) do
     {_, final_vorbis} = read_comment({comments, vorbis})
     # TODO raise error if left element of tuple is not empty
     final_vorbis
   end
-  
+
   def read_comments({comments, vorbis}, comments_length) do
     read_comment({comments, vorbis})
     |> read_comments(comments_length - 1)
   end
-  
+
   def read_comment({comments, vorbis}) do
     case comments do
       <<
@@ -55,14 +55,14 @@ defmodule Vorbis do
         }
     end
   end
-  
+
   def parse_comment(comment, vorbis) do
     comment
     |> String.trim
     |> String.split("=")
     |> add_comment_value(vorbis)
   end
-  
+
   def add_comment_value([key,value], vorbis) do
     down_key =
       key
