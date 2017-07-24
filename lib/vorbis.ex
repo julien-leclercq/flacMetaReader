@@ -7,25 +7,24 @@ defmodule Vorbis do
   end
 
   def read_vendor({packet, vorbis}) do
-    cond packet do
+    case packet do
       <<
         vendor_length::size(32)-little,
         vendor_string::size(vendor_length)-unit(8),
         comments::binary
-      >> ->
-        {
-          <<comments::binary>>,
-          Map.put(
-            vorbis,
-            :vendor,
-            <<vendor_string::size(vendor_length)-unit(8)>>
-          )
-        }
+      >> -> {
+        <<comments::binary>>,
+        Map.put(
+          vorbis,
+          :vendor,
+          <<vendor_string::size(vendor_length)-unit(8)>>
+        )
+      }
     end
   end
 
   def read_comments({packet, vorbis}) do
-    cond packet do
+    case packet do
       <<comments_length::size(32)-little, comments::binary>> ->
         read_comments({<<comments::binary>>, vorbis}, comments_length)
     end
