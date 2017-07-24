@@ -31,3 +31,4 @@ be found at [https://hexdocs.pm/flacMetaReader](https://hexdocs.pm/flacMetaReade
 
 3. Improve features
    - [ ] Sox integration ?
+  
