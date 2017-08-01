@@ -1,7 +1,11 @@
 defmodule Vorbis do
+  @moduledoc"""
+    A module to provide parsing functions for Vorbis blocks
+  """
+
 
   def read_block(packet) do
-    { packet, %{} }
+    {packet, %{}}
     |> read_vendor
     |> read_comments
   end
@@ -10,7 +14,7 @@ defmodule Vorbis do
     case packet do
       <<
         vendor_length::size(32)-little,
-        vendor_string::size(vendor_length)-unit(8),
+        vendor_string::size(vendor_length) - unit(8),
         comments::binary
       >> -> {
         <<comments::binary>>,
@@ -32,12 +36,12 @@ defmodule Vorbis do
 
   def read_comments({comments, vorbis}, 1) do
     {_, final_vorbis} = read_comment({comments, vorbis})
-    # TODO raise error if left element of tuple is not empty
     final_vorbis
   end
 
   def read_comments({comments, vorbis}, comments_length) do
-    read_comment({comments, vorbis})
+    {comments, vorbis}
+    |> read_comment
     |> read_comments(comments_length - 1)
   end
 
@@ -45,7 +49,7 @@ defmodule Vorbis do
     case comments do
       <<
         comment_length::size(32)-little,
-        comment::size(comment_length)-unit(8),
+        comment::size(comment_length) - unit(8),
         ending::binary
       >> ->
         {
@@ -62,10 +66,10 @@ defmodule Vorbis do
     |> add_comment_value(vorbis)
   end
 
-  def add_comment_value([key,value], vorbis) do
+  def add_comment_value([key, value], vorbis) do
     down_key =
       key
-      |>String.downcase
+      |> String.downcase
       |> String.to_atom
     Map.put(vorbis, down_key, [value | Map.get(vorbis, down_key)])
   end

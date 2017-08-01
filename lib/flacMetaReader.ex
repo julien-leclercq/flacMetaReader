@@ -11,7 +11,8 @@ defmodule FlacMetaReader do
 
 
   def parse(file) do
-    File.open(file)
+    file
+    |> File.open
     |> init_flac_meta_reading
     |> read_metadatas
   end
@@ -39,7 +40,7 @@ defmodule FlacMetaReader do
       final::size(1),
       block_type::size(7),
       length::size(24),
-      meta_data_block::size(length)-unit(8),
+      meta_data_block::size(length) - unit(8),
       ending::binary
     >> = bits
 
