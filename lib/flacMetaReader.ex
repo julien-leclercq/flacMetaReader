@@ -36,12 +36,11 @@ defmodule FlacMetaReader do
   def read_metadatas({:ok, bits}), do: read_metadatas(bits)
   def read_metadatas(bits), do: read_metadatas(bits, %{})
   def read_metadatas(bits, metadatas) do
-    <<
-      final::size(1),
-      block_type::size(7),
-      length::size(24),
-      meta_data_block::size(length) - unit(8),
-      ending::binary
+    << final           :: size(1),
+       block_type      :: size(7),
+       length          :: size(24),
+       meta_data_block :: binary-size(length),
+       ending          :: binary
     >> = bits
 
     res = case block_type do
@@ -49,7 +48,7 @@ defmodule FlacMetaReader do
         Map.put(
           metadatas,
           :vorbis,
-          Vorbis.read_block(<<meta_data_block::size(length)-unit(8)>>)
+          Vorbis.read_block(<<meta_data_block::binary-size(length)>>)
         )
       _ -> metadatas
     end

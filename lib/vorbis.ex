@@ -12,12 +12,11 @@ defmodule Vorbis do
 
   def read_vendor({packet, vorbis}) do
     case packet do
-      <<
-        vendor_length::size(32)-little,
-        vendor_string::size(vendor_length) - unit(8),
-        comments::binary
+      << vendor_length :: size(32)-little,
+         vendor_string :: binary-size(vendor_length),
+         comments::binary
       >> -> {
-        <<comments::binary>>,
+        << comments :: binary >>,
         Map.put(
           vorbis,
           :vendor,
