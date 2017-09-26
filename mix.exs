@@ -2,7 +2,7 @@ defmodule FlacMetaReader.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :flacMetaReader,
+    [app: :koop,
      version: "0.1.0",
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
