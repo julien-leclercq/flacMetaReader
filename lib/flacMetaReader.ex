@@ -6,7 +6,7 @@ defmodule FlacMetaReader do
   @doc """
     "664C6143" (Hexa) is the normal very beginning for every Flac file
   """
-  @flac_header <<0x66, 0x4C, 0x61, 0x43>>
+  @flac_header "fLaC"
   @vorbis_comment 4
 
 
