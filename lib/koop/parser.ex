@@ -14,8 +14,12 @@ defmodule Koop.Parser do
       {:ok, io_device} ->
         io_device
         |> IO.binread(:all)
-        |> fn bytes -> parser.hydrate(Koop.File.new, bytes) end.()
+        |> hydrate(parser)
       {:error, posix} -> error(posix)
     end
   end
+
+  @spec hydrate(binary, module) :: parsing_result
+  defp hydrate(bytes, parser), do: parser.hydrate(Koop.File.new(), bytes)
+
 end
