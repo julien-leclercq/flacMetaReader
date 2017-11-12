@@ -1,4 +1,4 @@
-# FlacMetaReader
+# FlacMetaReader [![Build Status](https://travis-ci.org/julien-leclercq/koop.svg?branch=master)](https://travis-ci.org/julien-leclercq/koop)
 
 **TODO: Add description**
 
@@ -17,18 +17,17 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/flacMetaReader](https://hexdocs.pm/flacMetaReader).
 
-## Future improvements 
+## Future improvements
 
 1. Format diversity
-	- [ ] add id3v1 
-	- [ ] add id3v2
-	- [ ] complete this list
+  - [ ] add id3v1
+  - [ ] add id3v2
+  - [ ] complete this list
 
 2. Improve usability
-	- [ ] Make the app as a server
-	- [ ] 2 modes (Async, Sync) ?
-	- [ ] Determine a data structure widely compatible
+  - [ ] Make the app as a server
+  - [ ] 2 modes (Async, Sync) ?
+  - [ ] Determine a data structure widely compatible
 
 3. Improve features
    - [ ] Sox integration ?
-  
