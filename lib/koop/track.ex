@@ -21,7 +21,8 @@ defmodule Koop.Track do
     description: [],
     location: [],
     contacts: [],
-    isrc: []
+    isrc: [],
+    comments: [],
   ]
 
   @type album        :: String.t
@@ -39,6 +40,7 @@ defmodule Koop.Track do
   @type location     :: String.t
   @type contact      :: String.t
   @type isrc         :: String.t
+  @type comment      :: String.t
 
   @type t :: %Track{
     tracknumber: tracknumber | nil,
@@ -55,7 +57,8 @@ defmodule Koop.Track do
     description: [description],
     location: [location],
     contacts: [contact],
-    isrc: [isrc]
+    isrc: [isrc],
+    comments: [comment],
   }
 
   @spec new():: t
@@ -135,4 +138,10 @@ defmodule Koop.Track do
   def add_isrc(track, isrc) do
     %{track | isrc: [isrc | track.isrc]}
   end
+
+  def add_comment(track, comment) do
+    %{track | comments: [comment | track.comments]}
+  end
+
+
 end

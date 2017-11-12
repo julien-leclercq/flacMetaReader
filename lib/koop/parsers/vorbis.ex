@@ -1,6 +1,7 @@
 defmodule Koop.Parsers.Vorbis do
   alias Koop.Utils.Result
   import Result
+  require Logger
 
   @moduledoc"""
     A module to provide parsing functions for Vorbis blocks
@@ -86,6 +87,10 @@ defmodule Koop.Parsers.Vorbis do
       "LOCATION"     -> &Koop.Track.add_location/2
       "CONTACT"      -> &Koop.Track.add_contact/2
       "ISRC"         -> &Koop.Track.add_isrc/2
+      "COMMENT"      -> &Koop.Track.add_comment/2
+      _              ->
+        Logger.info("field #{key} not recognized by Vorbis parser")
+        fn track, _ -> track end
     end
 
     track_updater = fn track -> updater.(track, value) end
