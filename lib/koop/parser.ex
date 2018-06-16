@@ -10,7 +10,7 @@ defmodule Koop.Parser do
 
   @spec parse(module, Path.t) :: parsing_result
   def parse(parser, path) do
-    case File.open(path) do
+    case File.open(path, [:read]) do
       {:ok, io_device} ->
         io_device
         |> IO.binread(:all)
