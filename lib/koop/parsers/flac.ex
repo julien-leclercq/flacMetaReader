@@ -23,15 +23,14 @@ defmodule Koop.Parsers.Flac do
   @spec init_flac_meta_reading(binary) :: Result.typed_result_tuple(binary)
   def init_flac_meta_reading(bytes) do
     case bytes do
-      (@flac_header <> tail) -> ok(tail)
-      _ -> error("file is not valid FLAC")
+      (@flac_header <> tail) -> ok(tail)   # Continue if header is valid
+      _ -> error("file is not valid FLAC") # Fail otherwise
     end
   end
 
   @doc """
 
   """
-
   @spec read_metadatas(binary, Koop.File.t) :: Result.typed_result_tuple(Koop.File.t)
   def read_metadatas(bits, koop_file) do
     << final           :: size(1),
@@ -47,7 +46,7 @@ defmodule Koop.Parsers.Flac do
     end
 
     case final do
-      1 -> ok(res)
+      1 -> res
       _ -> read_metadatas(<<ending::binary>>, res)
     end
   end
