@@ -8,7 +8,7 @@ defmodule FlacTest do
   describe ".parse" do
     test "it correctly parses flac file" do
       alias Koop.Parser
-      System.cwd
+      File.ls("./test/support")
       |> IO.inspect
       assert {:ok, %Koop.File{} = _track} = Parser.parse(Flac, @flac_file)
     end
