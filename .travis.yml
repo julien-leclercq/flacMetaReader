@@ -4,7 +4,6 @@ elixir: '1.6.3'
 
 script:
   - mix test
-  - mix format --ensure-formated
 
 cache:
   directories:
