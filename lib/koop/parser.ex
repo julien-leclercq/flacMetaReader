@@ -2,11 +2,11 @@ defmodule Koop.Parser do
   @moduledoc """
     Behaviour for track parsers
   """
-  alias Koop.Utils.Result
+  alias Kaur.Result
   import Result
 
-  @type parsing_result :: Result.typed_result_tuple(Koop.File.t)
-  @callback hydrate(Koop.File.t, binary) :: Result.typed_result_tuple(Koop.File.t)
+  @type parsing_result :: Result.result_tuple()
+  @callback hydrate(Koop.File.t, binary) :: Result.result_tuple()
 
   @spec parse(module, Path.t) :: parsing_result
   def parse(parser, path) do
