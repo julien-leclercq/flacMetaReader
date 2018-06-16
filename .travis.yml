@@ -3,5 +3,5 @@ language: elixir
 elixir: '1.6.3'
 
 script:
-  - ls -R
+  - ls -la ./test/support
   - mix test
