@@ -5,3 +5,8 @@ elixir: '1.6.3'
 script:
   - ls -la ./test/support
   - mix test
+
+cache:
+  directories:
+    - deps
+    - _build
