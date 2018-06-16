@@ -1,5 +1,5 @@
 defmodule Koop.Parsers.Vorbis do
-  alias Koop.Utils.Result
+  alias Koop.{Track, Utils.Result}
   import Result
   require Logger
 
@@ -7,6 +7,25 @@ defmodule Koop.Parsers.Vorbis do
     A module to provide parsing functions for Vorbis blocks
   """
   @behaviour Koop.Parser
+
+  @track_updaters %{
+    "TITLE"        => &Track.set_title/2,
+    "TRACKNUMBER"  => &Track.set_tracknumber/2,
+    "ALBUM"        => &Track.set_album/2,
+    "ARTIST"       => &Track.add_artist/2,
+    "ALBUMARTIST"  => &Track.add_albumartist/2,
+    "VERSION"      => &Track.set_version/2,
+    "PERFORMER"    => &Track.add_performer/2,
+    "COPYRIGHT"    => &Track.add_copyright/2,
+    "LICENCE"      => &Track.add_licence/2,
+    "ORGANIZATION" => &Track.add_organization/2,
+    "DESCRIPTION"  => &Track.add_description/2,
+    "DATE"         => &Track.set_date/2,
+    "LOCATION"     => &Track.add_location/2,
+    "CONTACT"      => &Track.add_contact/2,
+    "ISRC"         => &Track.add_isrc/2,
+    "COMMENT"      => &Track.add_comment/2
+  }
 
   @spec hydrate(Koop.File.t, binary) :: Result.typed_result_tuple(Koop.File.t)
   def hydrate(%Koop.File{} = koop_file, block) when is_binary(block) do
@@ -71,26 +90,11 @@ defmodule Koop.Parsers.Vorbis do
 
   @spec add_comment_value({String.t, String.t}, Koop.File.t) :: Koop.File.t
   defp add_comment_value({key, value}, %Koop.File{} = koop_file) do
-    updater = case key do
-      "TITLE"        -> &Koop.Track.set_title/2
-      "TRACKNUMBER"  -> &Koop.Track.set_tracknumber/2
-      "ALBUM"        -> &Koop.Track.set_album/2
-      "ARTIST"       -> &Koop.Track.add_artist/2
-      "ALBUMARTIST"  -> &Koop.Track.add_albumartist/2
-      "VERSION"      -> &Koop.Track.set_version/2
-      "PERFORMER"    -> &Koop.Track.add_performer/2
-      "COPYRIGHT"    -> &Koop.Track.add_copyright/2
-      "LICENCE"      -> &Koop.Track.add_licence/2
-      "ORGANIZATION" -> &Koop.Track.add_organization/2
-      "DESCRIPTION"  -> &Koop.Track.add_description/2
-      "DATE"         -> &Koop.Track.set_date/2
-      "LOCATION"     -> &Koop.Track.add_location/2
-      "CONTACT"      -> &Koop.Track.add_contact/2
-      "ISRC"         -> &Koop.Track.add_isrc/2
-      "COMMENT"      -> &Koop.Track.add_comment/2
-      _              ->
+    updater = case Map.get(@track_updaters, key) do
+      nil ->
         Logger.info("field #{key} not recognized by Vorbis parser")
         fn track, _ -> track end
+      updater -> updater
     end
 
     track_updater = fn track -> updater.(track, value) end

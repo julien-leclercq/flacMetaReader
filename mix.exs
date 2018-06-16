@@ -29,7 +29,7 @@ defmodule FlacMetaReader.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:credo, "~> 0.9", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:kaur, "~> 1.1.0"}

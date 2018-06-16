@@ -1,4 +1,9 @@
 defmodule Koop.File do
+  @moduledoc """
+  Module and struct to represent music files
+  """
+  alias Koop.Track
+
   defstruct [:track, :vendor]
 
   @type t :: %__MODULE__{
@@ -6,7 +11,7 @@ defmodule Koop.File do
     vendor: String.t
   }
 
-  def new, do: %__MODULE__{track: Koop.Track.new()}
+  def new, do: %__MODULE__{track: Track.new()}
 
   @spec set_vendor(t, String.t) :: t
   def set_vendor(koop_file, vendor), do: %{koop_file | vendor: vendor}

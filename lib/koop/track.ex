@@ -5,7 +5,6 @@ defmodule Koop.Track do
   """
   alias Koop.Track
 
-
   defstruct [
     :album,
     :date,
@@ -142,6 +141,5 @@ defmodule Koop.Track do
   def add_comment(track, comment) do
     %{track | comments: [comment | track.comments]}
   end
-
 
 end

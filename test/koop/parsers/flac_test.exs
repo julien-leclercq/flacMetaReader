@@ -3,11 +3,12 @@ defmodule FlacTest do
   use ExUnit.Case
   doctest Flac
 
-  @flac_file "test/support/panda_dub_die_brücke.flac"
+  @flac_file "./test/support/panda_dub_die_brücke.flac"
 
   describe ".parse" do
     test "it correctly parses flac file" do
-      assert {:ok, %Koop.File{} = _track} = Koop.Parser.parse(Flac, @flac_file)
+      alias Koop.Parser
+      assert {:ok, %Koop.File{} = _track} = Parser.parse(Flac, @flac_file)
     end
   end
 

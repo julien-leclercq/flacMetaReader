@@ -1,6 +1,6 @@
 defmodule Koop.Parsers.Flac do
-  alias Koop.Utils.Result
   alias Koop.Parsers.Vorbis
+  alias Koop.Utils.Result
   import Result
   @behaviour Koop.Parser
 
