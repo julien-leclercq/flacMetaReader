@@ -3,7 +3,7 @@ defmodule FlacTest do
   use ExUnit.Case
   doctest Flac
 
-  @flac_file "./test/support/panda_dub_die_brücke.flac"
+  @flac_file "./test/support/panda_dub_die_brucke.flac"
 
   describe ".parse" do
     test "it correctly parses flac file" do
