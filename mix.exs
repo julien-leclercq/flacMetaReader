@@ -2,7 +2,7 @@ defmodule FlacMetaReader.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :flacMetaReader,
+    [app: :koop,
      version: "0.1.0",
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
@@ -28,6 +28,11 @@ defmodule FlacMetaReader.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:credo, "~> 0.9", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:kaur, "~> 1.1.0"}
+    ]
   end
 end
